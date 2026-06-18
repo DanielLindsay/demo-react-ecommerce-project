@@ -39,3 +39,10 @@ A path of \* will display a component if the URL being called does not match any
 The path `path="/"` could also simply be replaced by the word `index`
 
 For more usage examples, refer to the React Router documentation: https://reactrouter.com/start/declarative/routing
+
+When using react Router, it is recommended to use react's `<Link>` component, rather than the standard `<a>` element:
+
+```JSX
+Use: <Link to="/home">Home</Link>
+Not: <a href="/home">Home</a>
+```
