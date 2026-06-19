@@ -46,3 +46,50 @@ When using react Router, it is recommended to use react's `<Link>` component, ra
 Use: <Link to="/home">Home</Link>
 Not: <a href="/home">Home</a>
 ```
+
+### React Properties
+
+Your custom react components can have custom properties that allow you to pass data from one component to another. This makes your components more reusable.
+
+On the component element, properties look like HTML attributes. In the component function itself, the properties can be accessed using the "props" object which is passed in as a method argument:
+
+```JSX
+/* Element: */
+<ChatMessage message="hello world" sender="jeff" />
+
+/* Function: */
+export default function ChatMessage(props) {
+  const message = props.message;
+  const sender = props.sender;
+
+  return <div>{sender} said: {message}</div>
+}
+
+/* Props object value: */
+{
+  message: "hello world",
+  sender: "jeff"
+}
+```
+
+You can use props in this manner or use JavaScript destructing as a shortcut to get the values from your props object directly.  
+For example, this code that uses destructuring will create a "message" and "sender" variable with the value of "props.message" and "props.sender" respectively:
+
+```JSX
+const {message, sender} = props;
+```
+
+Which means it is the same as this code:
+
+```JSX
+const message = props.message;
+const sender = props.sender;
+```
+
+For an even shorter shortcut, you can destructure the props object directly as the function's argument:
+
+```JSX
+export default function ChatMessage({message, sender}) {
+  return <div>{sender} said: {message}</div>
+}
+```
