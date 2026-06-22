@@ -93,3 +93,76 @@ export default function ChatMessage({message, sender}) {
   return <div>{sender} said: {message}</div>
 }
 ```
+
+### React Hook Form
+
+Docs: https://react-hook-form.com/
+
+React Hook Form is a react hook that others an alternative implementation to handle forms in React.
+
+For simple form implements, you will typically rely on 3 things: register, handleSubmit and formState:
+
+```JSX
+import { useForm } from "react-hook-form"; // Import the "useForm" hook from reach hook form
+
+function ExampleComponent() {
+    const {register, handleSubmit, formState: {errors}} = useForm();
+
+    return <div></div>
+}
+```
+
+#### Register & Validation
+
+You can use the "register" function to register your input/component into the form so that Reach Hook Form can handle the form validation and submission.
+
+For example, the following code registers the value of the inputs into variables called "firstName" and "lastName":
+
+```JSX
+<form>
+  <input {...register("firstName")} placeholder="First Name"/>
+  <input {...register("lastName")} placeholder="Last Name"/>
+</form>
+```
+
+To add validation to the inputs, you supply a second argument to the register function which contains the validation definition (https://react-hook-form.com/get-started#Applyvalidation):
+
+```JSX
+<form onSubmit={handleSubmit(onSubmit)}>
+  <input {...register("firstName", { required: true, maxLength: 20 })} />
+  <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} />
+  <input type="number" {...register("age", { min: 18, max: 99 })} />
+  <input type="submit" />
+</form>
+```
+
+#### Submitting the Form
+
+To submit the form (and simultaneously validate the form data), you must use the handleSubmit() method on the <form> element, like so:
+
+```JSX
+function onFormSubmit() {
+  alert("Form submitted")
+}
+
+<form onSubmit={handleSubmit(onFormSubmit)}>
+  <input {...register("firstName")} />
+  <input type="submit" />
+</form>
+```
+
+The handleSubmit() method should be given the name of another method, "onFormSubmit" in this case, which is the method that will actually deal with the form data, once the handleSubmit() method has finsihed validating the data and updating the formState.
+
+#### Getting Validation Errors
+
+To get the validation errors, you can use the "errors" object from the formState (https://react-hook-form.com/get-started#Handleerrors).
+The formState will place any error information inside the "errors" object, matching the name of the registered form field. For example `register("firstName")` will have its errors sotred under `errors.firstName`:
+
+```JSX
+<form onSubmit={handleSubmit(onFormSubmit)}>
+  <input {...register("firstName")} />
+  {errors.firstName && <p role="alert">{errors.firstName.message}</p>}
+
+  <input type="submit" />
+</form>
+```
