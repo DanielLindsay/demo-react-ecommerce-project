@@ -1,6 +1,6 @@
 # demo-react-ecommerce-project
 
-Based on: https://youtu.be/Wt3isV2irrA?si=z21J3YAFabVWUQft&t=5234
+Based on: https://youtu.be/Wt3isV2irrA?si=z21J3YAFabVWUQft
 
 This project is built using React + Vite.
 
