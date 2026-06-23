@@ -1,28 +1,51 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Auth() {
     const [mode, setMode] = useState("signup");
+    const [error, setError] = useState(null);
 
-    {
-        /*
+    const {signUp, login, user, logout} = useContext(AuthContext);
+
+    // The useNavigate() hook is used to programmatically navigate to a given url, using the navigate() method
+    const navigate = useNavigate();
+
+    {/*
         register: Allows you to register input element values as form values for React to handle.
         handleSubmit: A method that performs validation on the form before passing the data on to the "real" submit method.
         formState: an object that holds form information. Used to get validation errors in this case.
-         */
-    }
+    */}
     const {register, handleSubmit, formState: {errors}} = useForm();
 
-    function onSubmit() {
-        alert("Passed validation");
+    function onSubmit(data) {
+        setError(null); // clear error message
+
+        let result;
+        if (mode === "signup") {
+            result = signUp(data.email, data.password);
+        } else {
+            result = login(data.email, data.password);
+        }
+        
+        if (result.success) {
+            navigate("/");
+        }
+        else {
+            setError(result.error);
+        }
     }
 
     return (
         <div className="page">
             <div className="container">
                 <div className="auth-container">
+                    {user && <p>User logged in: {user.email}</p>}
+                    <button onClick={() => logout()}>Logout</button>
                     <h1 className="page-title">{mode === "signup" ? "Sign Up" : "Login"}</h1>
                     <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
+                        {error && <div className="error-message">{error}</div>}
                         <div className="form-group">
                             {/* htmlFor is the React version of HTML's for attribute. Use it to relate a label to an input element */}
                             <label className="form-label" htmlFor="email">Email</label>
@@ -39,7 +62,7 @@ function Auth() {
                             <label className="form-label" htmlFor="password">Password</label>
                             <input 
                                 className="form-input"
-                                type="passwords"
+                                type="password"
                                 id="password"
                                 {...register("password", {
                                         required: "Password is required",

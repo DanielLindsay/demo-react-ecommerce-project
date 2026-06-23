@@ -151,12 +151,25 @@ function onFormSubmit() {
 </form>
 ```
 
-The handleSubmit() method should be given the name of another method, "onFormSubmit" in this case, which is the method that will actually deal with the form data, once the handleSubmit() method has finsihed validating the data and updating the formState.
+The handleSubmit() method should be given the name of another method, "onFormSubmit" in this case, which is the method that will actually deal with the form data, once the handleSubmit() method has finished validating the data and updating the formState.
+
+To access the data in the form, you can use the "data" method argument which accessible in the method that is called after handleSubmit():
+
+```JSX
+function onFormSubmit(data) {
+ alert(`The first name is ${data.firstName}`)
+}
+
+<form onSubmit={handleSubmit(onFormSubmit)}>
+ <input {...register("firstName")} />
+ <input type="submit" />
+</form>
+```
 
 #### Getting Validation Errors
 
 To get the validation errors, you can use the "errors" object from the formState (https://react-hook-form.com/get-started#Handleerrors).
-The formState will place any error information inside the "errors" object, matching the name of the registered form field. For example `register("firstName")` will have its errors sotred under `errors.firstName`:
+The formState will place any error information inside the "errors" object, matching the name of the registered form field. For example `register("firstName")` will have its errors sorted under `errors.firstName`:
 
 ```JSX
 <form onSubmit={handleSubmit(onFormSubmit)}>
