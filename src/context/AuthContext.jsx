@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 {/* Context is a way of passing state information between components, especially those that aren't related (ie. don't have a parent-child relationship) */}
-export const AuthContext = createContext(null);
+const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
     const [user, setUser] = useState(
@@ -53,4 +53,13 @@ export default function AuthProvider({ children }) {
     return (
         <AuthContext.Provider value={{ signUp, user, login, logout }}>{children}</AuthContext.Provider>
     )
+}
+
+// This is a custom React hook
+// It is used to export the AuthContext with explicitly doing so
+// Instead, users can import the useAuth() hook to get access to the context
+export function useAuth() {
+    const context = useContext(AuthContext);
+
+    return context;
 }
