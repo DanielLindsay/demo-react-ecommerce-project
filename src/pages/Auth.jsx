@@ -7,7 +7,7 @@ function Auth() {
     const [mode, setMode] = useState("signup");
     const [error, setError] = useState(null);
 
-    const {signUp, login, user, logout} = useContext(AuthContext);
+    const {signUp, login} = useContext(AuthContext);
 
     // The useNavigate() hook is used to programmatically navigate to a given url, using the navigate() method
     const navigate = useNavigate();
@@ -41,8 +41,6 @@ function Auth() {
         <div className="page">
             <div className="container">
                 <div className="auth-container">
-                    {user && <p>User logged in: {user.email}</p>}
-                    <button onClick={() => logout()}>Logout</button>
                     <h1 className="page-title">{mode === "signup" ? "Sign Up" : "Login"}</h1>
                     <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
                         {error && <div className="error-message">{error}</div>}
@@ -55,7 +53,7 @@ function Auth() {
                                 id="email"
                                 {...register("email", {required: "Email is required"})}
                             />
-                            {/* the && operator is a JavaScript shorthand for a single line if statment: if X = true && do Y */}
+                            {/* The && operator is a JavaScript shorthand for a single line if statment: if X = true && do Y */}
                             {errors.email && <span className="form-error">{errors.email.message}</span>}
                         </div>
                         <div className="form-group">
